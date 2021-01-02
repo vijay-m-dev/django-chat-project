@@ -1,0 +1,35 @@
+{%  extends 'account/base.html' %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Group Name</th>
+      <th scope="col">No of peoples</th>
+      <th scope="col">View people</th>
+      <th scope="col">Update people</th>
+      <th scope="col">Delete group</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for group in groups %}
+    <tr>
+      <th scope="row">{{group.name}}</th>
+      <td>{{ group.num_users }}</td>
+      <td><a href="{% url 'view_group' group.id %}" class="btn btn-outline-info">View People</a></td>
+      {% if admin == group.admin %}
+      <td><a href="{% url 'updateuser' group.id %}" class="btn btn-outline-info">Update People</a></td>
+      <td><a href="{% url 'delete_groupusers' group.id %}" class="btn btn-outline-info">Delete Group</a></td>
+      {% else %}
+      <td></td>
+      <td></td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

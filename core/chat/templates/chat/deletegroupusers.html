@@ -1,0 +1,39 @@
+
+{%  extends 'account/base.html' %}
+
+{% block content %}
+                    {% for user in users %}
+                    <div> {{ user }} is deleted from the group</div>
+                    {% endfor %}
+                    All users are removed.
+                    Are you sure, you want to delete this group?
+                    <a href="{% url 'delete_group' room_name %}" class="btn btn-outline-info">Yes, Delete.</a>
+ 
+    
+    {{ request.user.username|json_script:"user_username" }}
+    {{room_name|json_script:"room-name"}}
+    <script type="text/javascript">
+        const users= {{ users|safe }};
+        const user_username = JSON.parse(document.getElementById('user_username').textContent);
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const chatSocket = new WebSocket(
+                'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+            );
+        chatSocket.onopen = function(){
+            for(let delete_user_username in users){
+                chatSocket.send(JSON.stringify({
+                'message':users[delete_user_username] +' deleted',
+                'username': user_username,
+            }));
+            }
+            
+            chatSocket.close();
+        }
+        
+
+        
+        
+
+    </script>
+
+{% endblock content %}

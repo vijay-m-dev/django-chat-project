@@ -1,0 +1,31 @@
+
+{%  extends 'account/base.html' %}
+
+{% block content %}
+                    <div> {{remove_user_username }} is deleted from the group</div>
+ 
+    {{ remove_user_username|json_script:"delete_user_username" }}
+    {{ request.user.username|json_script:"user_username" }}
+    {{room_name|json_script:"room-name"}}
+    <script type="text/javascript">
+    	const roomName = JSON.parse(document.getElementById('room-name').textContent);
+    	const user_username = JSON.parse(document.getElementById('user_username').textContent);
+        const delete_user_username = JSON.parse(document.getElementById('delete_user_username').textContent);
+        const chatSocket = new WebSocket(
+                'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+            );
+        chatSocket.onopen = function(){
+            chatSocket.send(JSON.stringify({
+                'message':delete_user_username +' deleted',
+                'username': user_username,
+            }));
+            chatSocket.close();
+        }
+        
+
+        
+    	
+
+    </script>
+
+{% endblock content %}

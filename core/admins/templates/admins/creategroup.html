@@ -1,0 +1,20 @@
+{%  extends 'account/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1>Create group</h1>
+
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <fieldset class="form-group">
+    <legend>Group Form </legend>
+    {{ form|crispy }}
+  </fieldset>
+  <div class="form-group">
+    <input class="btn btn-outline-info" type="submit" value="Submit">
+  </div>  
+</form>
+
+{% endblock content %}

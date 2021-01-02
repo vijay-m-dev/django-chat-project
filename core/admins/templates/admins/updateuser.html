@@ -1,0 +1,51 @@
+{%  extends 'account/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<h1>Existing Users</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for user in users2 %}
+    <tr>
+      <th scope="row">{{user.username}}</th>
+      <td></td>
+      <td><a href="{% url 'deleteuser' id1=pk id2=user.id %}" class="btn btn-outline-info">Remove</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<hr>
+<hr>
+
+<h1>Other Users</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Add</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for user in users1 %}
+    <tr>
+      <th scope="row">{{user.username}}</th>
+      <td></td>
+      <td><a href="{% url 'confirm_adduser' id1=pk id2=user.id %}" class="btn btn-outline-info">ADD</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock content %}

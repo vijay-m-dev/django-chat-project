@@ -1,0 +1,75 @@
+
+{%  extends 'account/base.html' %}
+
+{% block content %}
+
+<h1>Groups</h1>
+
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Group Name</th>
+      <th scope="col">View people</th>
+      <th scope="col">Chat</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for group in groups %}
+    <tr>
+      <th scope="row">{{group.name}}</th>
+      <td><a href="{% url 'view_group' group.id %}" class="btn btn-outline-info" class="btn btn-outline-info">View People</a></td>
+      <td><a href="{% url 'room' room_name=group.id %}" class="btn btn-outline-info">Chat People</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h1>Single Chat</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Person Name</th>
+      <th scope="col">Chat</th>
+      <th scope="col">new mwssages</th>
+      <th scope="col">last seen</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in friends %}
+    <tr>
+      <th scope="row">{{i.0.username}} </th>
+      <td><a href="{% url 'single_chat_room' person_id=i.0.id %}" class="btn btn-outline-info">Chat</a></td>
+      <td>{{ i.1 }}</td>
+      {% load tz %}
+      {% localtime on %}
+      <td>{{ i.2 }}</td>
+      {% endlocaltime %}
+      
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h1>Add People to Chat</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Person Name</th>
+      <th scope="col">Chat</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for new_user in new_users %}
+    <tr>
+      <th scope="row">{{new_user.username}}</th>
+      <td><a href="{% url 'single_chat_room' person_id=new_user.id %}" class="btn btn-outline-info">Chat</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}
